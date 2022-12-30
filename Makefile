@@ -51,3 +51,10 @@ fmt:
 import-sort:
 > $(PYTHON) -m isort src
 .PHONY: import-sort
+
+#######################################
+########### Run the thing #############
+#######################################
+prediction:
+> $(PYTHON) -m src.solar_production_prediction
+.PHONY: prediction
