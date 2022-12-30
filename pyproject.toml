@@ -4,7 +4,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "solar-production-model"
+name = "solar_production_prediction"
 version = "0.1.0"
 dependencies = ["lxml", "python-dotenv", "scikit-learn", "tenacity"]
 
