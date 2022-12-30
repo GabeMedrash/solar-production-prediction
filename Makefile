@@ -1,4 +1,6 @@
-# See https://tech.davis-hansson.com/p/make/
+#######################################
+######### Make configuration ##########
+#######################################
 SHELL := bash
 .ONESHELL:
 .SHELLFLAGS := -eu -o pipefail -c
@@ -11,14 +13,12 @@ ifeq ($(origin .RECIPEPREFIX), undefined)
 endif
 .RECIPEPREFIX = >
 
-##########################
-######### Setup ##########
-##########################
-
+#######################################
+############### Venv ##################
+#######################################
 PYTHON_VERSION = python3.11
 VENV_NAME := venv
 VENV_BIN := $(VENV_NAME)/bin
-ACTIVATE = $(VENV_BIN)/activate
 PYTHON = $(VENV_BIN)/python3
 
 $(PYTHON):
@@ -35,10 +35,11 @@ requirements.dev.text: venv pyproject.toml
 
 install: requirements.txt requirements.dev.text
 > $(PYTHON) -m piptools sync requirements.dev.text requirements.txt
+.PHONY: install
 
-##########################
-###### Code quality ######
-##########################
+#######################################
+########### Code quality ##############
+#######################################
 type-check:
 > $(PYTHON) -m mypy --ignore-missing-imports src
 .PHONY: type-check
