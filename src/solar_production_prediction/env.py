@@ -16,8 +16,8 @@ class Env:
     Convenience wrapper for getting environment variables this application cares about.
     If any of these environment variables are not present, fail.
 
-    Env vars are expected to be placed into a `.env` file in the root of this repository.
-    For testing, one could alternately pass a dictionary into the constructor with the expected keys.
+    Env vars are expected to be found in a `.env` file (gitignored) in the root of this repository.
+    For testing, pass a dictionary into the constructor with the expected keys.
     """
     _env: dict[str, str]
 
