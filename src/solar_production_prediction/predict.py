@@ -1,6 +1,5 @@
 import dataclasses
 import datetime
-import pdb
 import typing
 
 from .training import KEY_HOUR_SEPARATOR, Model
@@ -34,7 +33,6 @@ def predict(daily_forecast: DailyForecast, model: Model) -> SolarProductionPredi
         try:
             return next(forecast)
         except StopIteration:
-            # pdb.set_trace()
             raise InsufficientHourlyForecastError(
                 f"Can't find forecast for hour {hour}"
             ) from None
@@ -64,7 +62,6 @@ def predict(daily_forecast: DailyForecast, model: Model) -> SolarProductionPredi
                 prediction = _get_weather_prediction(forecast, prediction_type)
                 evidence.append(prediction.value)
             case _:
-                pdb.set_trace()
                 raise ValueError()
 
     solar_prediction = model.predictor.predict([evidence])
