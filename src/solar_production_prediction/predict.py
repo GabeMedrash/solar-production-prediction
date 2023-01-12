@@ -27,7 +27,7 @@ def predict(daily_forecast: DailyForecast, model: Model) -> SolarProductionPredi
     It may contain fewer than 24 forecast hours.
     """
 
-    def _get_forecase_for_hour(hour: int) -> HourlyForecast:
+    def _get_forecast_for_hour(hour: int) -> HourlyForecast:
         forecast: typing.Iterator[HourlyForecast] = filter(
             lambda f: f.forecast_hour.hour == hour, daily_forecast.hourly
         )

@@ -55,7 +55,7 @@ class NoaaApi:
         hourly_forecasts: list[HourlyForecast] = []
 
         lat, lon = self._env.latlong()
-        root = HttpClient.get_xml(
+        root = self._http_client.get_xml(
             f"https://forecast.weather.gov/MapClick.php?lat={lat}&lon={lon}&FcstType=digitalDWML"
         )
 
