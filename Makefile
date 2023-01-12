@@ -30,11 +30,15 @@ venv: $(PYTHON)
 requirements.txt: venv pyproject.toml
 > $(PYTHON) -m piptools compile --generate-hashes --resolver=backtracking -o requirements.txt pyproject.toml
 
-requirements.dev.text: venv pyproject.toml
-> $(PYTHON) -m piptools compile --extra dev --generate-hashes --resolver=backtracking -o requirements.dev.text pyproject.toml
+requirements.dev.txt: venv pyproject.toml
+> $(PYTHON) -m piptools compile --extra dev --generate-hashes --resolver=backtracking -o requirements.dev.txt pyproject.toml
 
-install: requirements.txt requirements.dev.text
-> $(PYTHON) -m piptools sync requirements.dev.text requirements.txt
+install-dev: requirements.dev.txt
+> $(PYTHON) -m piptools sync requirements.dev.txt
+.PHONY: install-dev
+
+install: requirements.txt
+> $(PYTHON) -m piptools sync requirements.txt
 .PHONY: install
 
 #######################################
