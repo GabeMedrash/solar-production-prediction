@@ -33,7 +33,6 @@ def load_data() -> tuple[list[X], list[Y], list[str]]:
                     y.append(float(value))
                 elif key == "date":
                     evidence.append(datetime.date.fromisoformat(value).month)
-                    pass
                 else:
                     evidence.append(float(value))
 

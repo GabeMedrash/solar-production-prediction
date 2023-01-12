@@ -3,3 +3,9 @@ from .create_training_set import (
     MAX_HOUR,
     MIN_HOUR,
 )
+
+__all__ = (
+    "KEY_HOUR_SEPARATOR",
+    "MAX_HOUR",
+    "MIN_HOUR",
+)
