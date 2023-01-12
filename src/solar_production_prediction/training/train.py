@@ -1,4 +1,5 @@
 import dataclasses
+import json
 
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
@@ -15,11 +16,22 @@ RANDOM_STATE = 6853
 class Model:
     coefficient_of_determination: float
     fieldnames: list[str]  # exact ordering of data fields
-    model: LinearRegression
+    predictor: LinearRegression
     random_state: int  # random state used in train_test_split
     rmse_test: float
     rmse_train: float
     test_size: float  # percent (0..1) of data reserved for model testing
+    version: int
+
+    def to_json(self) -> str:
+        unserializeable_fields = ["predictor"]
+        as_dict = dataclasses.asdict(self)
+        without_unserializeable_fields = {
+            field: value
+            for field, value in as_dict.items()
+            if field not in unserializeable_fields
+        }
+        return json.dumps(without_unserializeable_fields)
 
 
 def train(test_size=0.25) -> Model:
@@ -32,7 +44,7 @@ def train(test_size=0.25) -> Model:
     regression_model.fit(x_train, y_train)
 
     return Model(
-        model=regression_model,
+        predictor=regression_model,
         coefficient_of_determination=regression_model.score(x_test, y_test),
         fieldnames=fieldnames,
         random_state=RANDOM_STATE,
@@ -43,4 +55,5 @@ def train(test_size=0.25) -> Model:
             y_train, regression_model.predict(x_train), squared=False
         ),
         test_size=test_size,
+        version=1,
     )

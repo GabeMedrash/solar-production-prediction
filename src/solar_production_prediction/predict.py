@@ -60,14 +60,14 @@ def predict(daily_forecast: DailyForecast, model: Model) -> SolarProductionPredi
             case ["date"]:
                 evidence.append(daily_forecast.date.month)
             case [prediction_type, hour]:
-                forecast = _get_forecase_for_hour(int(hour))
+                forecast = _get_forecast_for_hour(int(hour))
                 prediction = _get_weather_prediction(forecast, prediction_type)
                 evidence.append(prediction.value)
             case _:
                 pdb.set_trace()
                 raise ValueError()
 
-    solar_prediction = model.model.predict([evidence])
+    solar_prediction = model.predictor.predict([evidence])
     return SolarProductionPrediction(
         date=daily_forecast.date, energy_production_Wh=solar_prediction[0]
     )
