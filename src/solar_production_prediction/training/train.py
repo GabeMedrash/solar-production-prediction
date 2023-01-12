@@ -57,3 +57,8 @@ def train(test_size=0.25) -> Model:
         test_size=test_size,
         version=1,
     )
+
+
+if __name__ == "__main__":
+    model = train()
+    print(model.to_json())

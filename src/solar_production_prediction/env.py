@@ -6,6 +6,7 @@ load_dotenv()
 
 
 class Env:
+    ENV_VAR_AIRNOW_API_KEY = "AIRNOW_API_KEY"
     ENV_VAR_ENPHASE_AUTH_CODE = "ENPHASE_AUTH_CODE"
     ENV_VAR_ENPHASE_API_KEY = "ENPHASE_API_KEY"
     ENV_VAR_ENPHASE_USER_ID = "ENPHASE_USER_ID"
@@ -23,6 +24,9 @@ class Env:
 
     def __init__(self, environ: dict[str, str] = os.environ.copy()) -> None:
         self._env = environ
+
+    def airnow_api_key(self) -> str:
+        return self._env[Env.ENV_VAR_AIRNOW_API_KEY]
 
     def enphase_auth_code(self) -> str:
         return self._env[Env.ENV_VAR_ENPHASE_AUTH_CODE]
