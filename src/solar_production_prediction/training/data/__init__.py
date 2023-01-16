@@ -1,11 +1,11 @@
 from .create_training_set import (
-    KEY_HOUR_SEPARATOR,
     MAX_HOUR,
     MIN_HOUR,
+    OBSERVATION_NAME_AND_HOUR_SEPARATOR,
 )
 
 __all__ = (
-    "KEY_HOUR_SEPARATOR",
+    "OBSERVATION_NAME_AND_HOUR_SEPARATOR",
     "MAX_HOUR",
     "MIN_HOUR",
 )

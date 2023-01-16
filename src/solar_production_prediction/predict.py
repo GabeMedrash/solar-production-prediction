@@ -2,7 +2,10 @@ import dataclasses
 import datetime
 import typing
 
-from .training import KEY_HOUR_SEPARATOR, Model
+from .training import (
+    OBSERVATION_NAME_AND_HOUR_SEPARATOR,
+    Model,
+)
 from .weather_api import (
     DailyForecast,
     HourlyForecast,
@@ -54,7 +57,7 @@ def predict(daily_forecast: DailyForecast, model: Model) -> SolarProductionPredi
     for field in model.fieldnames:
         if field == "energy_production_Wh":
             continue
-        match field.split(KEY_HOUR_SEPARATOR):
+        match field.split(OBSERVATION_NAME_AND_HOUR_SEPARATOR):
             case ["date"]:
                 evidence.append(daily_forecast.date.month)
             case [prediction_type, hour]:

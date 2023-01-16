@@ -94,7 +94,7 @@ OUTFILE = pathlib.Path(__file__).parent / "preprocessed_training_data.csv"
 
 MIN_HOUR = 7  # 7am
 MAX_HOUR = 19  # 7pm
-KEY_HOUR_SEPARATOR = "_"
+OBSERVATION_NAME_AND_HOUR_SEPARATOR = "|"
 joined_records = []
 for solar_production_record in solar_production_records:
     weather_record_for_date = weather_records[solar_production_record["date"]]
@@ -109,7 +109,9 @@ for solar_production_record in solar_production_records:
             }
             for obs_name, obs_value in weather_record_for_hour.observations:
                 if obs_name != "datetime":
-                    formatted_key = f"{obs_name}{KEY_HOUR_SEPARATOR}{hour}"
+                    formatted_key = (
+                        f"{obs_name}{OBSERVATION_NAME_AND_HOUR_SEPARATOR}{hour}"
+                    )
                     joined[formatted_key] = obs_value
 
     joined_records.append(joined)
