@@ -14,8 +14,9 @@ XAxisData: typing.TypeAlias = list[datetime.date]
 YAxisData: typing.TypeAlias = list[int | float]
 
 
-def read_data(dimension: str) -> tuple[XAxisData, YAxisData]:
+def read_data(dimension: str) -> tuple[XAxisData, YAxisData, YAxisData]:
     dates: XAxisData = []
+    energy_production: YAxisData = []
     dim_data: YAxisData = []
     with open(TRAINING_DATA, mode="r", newline="") as fd:
         csv_reader = csv.DictReader(fd)
@@ -30,29 +31,44 @@ def read_data(dimension: str) -> tuple[XAxisData, YAxisData]:
             dates.append(
                 get_field_and_format("date", lambda ds: datetime.date.fromisoformat(ds))
             )
+            energy_production.append(
+                get_field_and_format("energy_production_Wh", float)
+            )
             dim_data.append(get_field_and_format(dimension, float))
 
-    return dates, dim_data
+    return dates, energy_production, dim_data
 
 
 def plot_data(
-    x_axis_data: XAxisData, y_axis_data: YAxisData, ylabel: str, title: str
+    dates: XAxisData, energy_production: YAxisData, dim_data: YAxisData, ylabel: str
 ) -> None:
+    fig, ax = plt.subplots(2, 1)
+
+    ax[0].plot(dates, energy_production, "bo")
+    ax[0].set(
+        xlabel="Date",
+        ylabel="Energy production",
+        title="Energy production by date",
+    )
+    ax[0].xaxis.set_major_locator(mdates.MonthLocator(interval=4))
+    ax[0].xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    ax[0].grid(True)
+
+    ax[1].plot(dates, dim_data, "go")
+    ax[1].set(
+        xlabel="Date",
+        ylabel=ylabel,
+        title=f"{ylabel.capitalize()} by date",
+    )
+    ax[1].xaxis.set_major_locator(mdates.MonthLocator(interval=4))
+    ax[1].xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    ax[1].grid(True)
+
+    fig.autofmt_xdate()
     manager = plt.get_current_fig_manager()
     window_width, window_height = manager.window.maxsize()
-
-    fig, ax = plt.subplots()
-    ax.scatter(x_axis_data, y_axis_data)
-    ax.set(
-        xlabel="date",
-        ylabel=ylabel,
-        title=title,
-    )
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=4))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
-    fig.autofmt_xdate()
     fig.set(figwidth=window_width // 100, figheight=window_height // 100)
-    ax.grid()
+
     plt.show()
 
 
@@ -62,13 +78,7 @@ if __name__ == "__main__":
         "dimension",
         type=str,
     )
-    parser.add_argument("--ylabel", dest="ylabel", type=str, required=False)
-    parser.add_argument("--title", dest="title", type=str, required=False)
     args = parser.parse_args()
 
-    x_axis_data, y_axis_data = read_data(args.dimension)
-
-    ylabel = args.ylabel if args.ylabel else args.dimension
-    title = args.title if args.title else f"{args.dimension.capitalize()} over time"
-
-    plot_data(x_axis_data, y_axis_data, ylabel, title)
+    dates, energy_production, dim_data = read_data(args.dimension)
+    plot_data(dates, energy_production, dim_data, args.dimension)
