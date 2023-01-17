@@ -3,5 +3,4 @@
 .mypy_cache/
 venv/
 __pycache__/
-predictions/
 src/solar_production_prediction/training/data/historical_aqi_data/
