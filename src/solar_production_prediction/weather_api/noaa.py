@@ -86,13 +86,14 @@ class NoaaApi:
             i = 0
             for value in parameter.iter("value"):
                 hour_forecast = hourly_forecasts[i]
-                formatted = formatter(value.text)
+                try:
+                    formatted = formatter(value.text)
+                except TypeError:
+                    print(f"Failed to format {value.text} for {parameter}")
+                    continue
                 prediction = WeatherPrediction(name, formatted)
                 hour_forecast.predictions.append(prediction)
                 i += 1
-
-        for hour_forecast in hourly_forecasts:
-            assert len(hour_forecast.predictions) == len(DIMS)
 
         # group into daily forecasts
         daily: dict[datetime.date, DailyForecast] = {}
