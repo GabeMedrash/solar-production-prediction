@@ -3,17 +3,17 @@ import dbm
 import json
 import pathlib
 
+from .model import model
 from .predict import (
     InsufficientHourlyForecastError,
     predict,
 )
-from .training import train
 from .weather_api import NoaaApi
 
-today = datetime.datetime.now().date()
+if model is None:
+    raise TypeError("model must be trained and exported from the `model` sub-package")
 
-# Get trained model
-model = train()
+today = datetime.datetime.now().date()
 
 # Get current weather forecast
 noaa_api = NoaaApi()

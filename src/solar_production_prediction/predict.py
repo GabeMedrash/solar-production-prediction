@@ -2,7 +2,7 @@ import dataclasses
 import datetime
 import typing
 
-from .training import (
+from .model import (
     OBSERVATION_NAME_AND_HOUR_SEPARATOR,
     Model,
 )
@@ -60,6 +60,9 @@ def predict(daily_forecast: DailyForecast, model: Model) -> SolarProductionPredi
         match field.split(OBSERVATION_NAME_AND_HOUR_SEPARATOR):
             case ["date"]:
                 evidence.append(daily_forecast.date.month)
+            case ["pm25_daily_avg"]:
+                # TODO
+                pass
             case [prediction_type, hour]:
                 forecast = _get_forecast_for_hour(int(hour))
                 prediction = _get_weather_prediction(forecast, prediction_type)
@@ -67,7 +70,7 @@ def predict(daily_forecast: DailyForecast, model: Model) -> SolarProductionPredi
             case _:
                 raise ValueError()
 
-    solar_prediction = model.predictor.predict([evidence])
+    solar_prediction = model.estimator.predict([evidence])
     return SolarProductionPrediction(
         date=daily_forecast.date, energy_production_Wh=solar_prediction[0]
     )

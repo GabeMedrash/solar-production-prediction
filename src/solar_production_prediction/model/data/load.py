@@ -3,22 +3,15 @@ import datetime
 import pathlib
 import typing
 
-from . import data
-
-# When <module> is a non-stdlib package, <module>.__file__ is the full path to that package's __init__.py.
-# Therefore, Path(<module>.__file__).parent is the full path to the package directory itself.
-TRAINING_DATA = pathlib.Path(data.__file__).parent / "preprocessed_training_data.csv"
-
-
 X: typing.TypeAlias = list[float | int]
 Y: typing.TypeAlias = float
 
 
-def load_data() -> tuple[list[X], list[Y], list[str]]:
+def load_data(training_data: pathlib.Path) -> tuple[list[X], list[Y], list[str]]:
     x: list[X] = []
     y: list[Y] = []
     fieldnames: list[str] = []
-    with open(TRAINING_DATA, mode="r", newline="") as fd:
+    with open(training_data, mode="r", newline="") as fd:
         reader = csv.DictReader(fd)
         if not reader.fieldnames:
             raise ValueError(

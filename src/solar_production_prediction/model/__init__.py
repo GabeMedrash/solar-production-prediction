@@ -3,12 +3,13 @@ from .data import (
     MIN_HOUR,
     OBSERVATION_NAME_AND_HOUR_SEPARATOR,
 )
-from .train import Model, train
+from .model_base import Model
+from .v2022_12_31 import model
 
 __all__ = (
     "OBSERVATION_NAME_AND_HOUR_SEPARATOR",
     "MAX_HOUR",
     "MIN_HOUR",
     "Model",
-    "train",
+    "model",
 )

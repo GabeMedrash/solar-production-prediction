@@ -1,10 +1,14 @@
 """
 Combine solar production data (energy produced per day) with historical weather data
 (hourly) to produce joined dataset ready for training.
-Output csv has the date and energy production as first two columns,
-then a repeating set of columns for observed weather at specific hours.
-E.g.:
-date | energy_production_Wh | temp_7 | humidity_7 | cloudcover_7 | ... | temp_14 | humidity_14 | cloudcover_14 | ...
+Output CSV has the date and energy production as first two columns,
+a daily average of AQI for that day, then a repeating set of columns for observed weather at specific hours.
+
+Example output:
+`date | energy_production_Wh | pm25_daily_avg | temp_7 | humidity_7 | cloudcover_7 | ... | temp_14 | humidity_14 | cloudcover_14 | ...`
+
+To run:
+`/venv/bin/python src/solar_production_prediction/training/data/create_training_set.py`
 """
 import csv
 import dataclasses
@@ -89,6 +93,18 @@ with open(WEATHER, mode="r", newline="") as fd:
         weather_record_for_date.hours.append(weather_record_for_hour)
 
 
+### Historical AQI
+AQI = pathlib.Path(__file__).parent / "historical_aqi-2017-12-13_to_2022-12-26.csv"
+aqi_records: dict[datetime.date, float] = {}
+with open(AQI, mode="r", newline="") as fd:
+    csv_reader = csv.DictReader(fd)
+
+    for row in csv_reader:
+        date = datetime.date.fromisoformat(row["date"])
+        aqi = float(row["pm25_daily_avg"])
+        aqi_records[date] = aqi
+
+
 ### Joined dataset
 OUTFILE = pathlib.Path(__file__).parent / "preprocessed_training_data.csv"
 
@@ -97,10 +113,14 @@ MAX_HOUR = 19  # 7pm
 OBSERVATION_NAME_AND_HOUR_SEPARATOR = "|"
 joined_records = []
 for solar_production_record in solar_production_records:
-    weather_record_for_date = weather_records[solar_production_record["date"]]
     joined = {
         **solar_production_record,
     }
+
+    aqi_record_for_date = aqi_records[solar_production_record["date"]]
+    # joined["pm25_daily_avg"] = aqi_record_for_date
+
+    weather_record_for_date = weather_records[solar_production_record["date"]]
     for weather_record_for_hour in weather_record_for_date.hours:
         hour = weather_record_for_hour.datetime.hour
         if MIN_HOUR <= hour <= MAX_HOUR:
