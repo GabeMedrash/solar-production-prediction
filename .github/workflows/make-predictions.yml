@@ -15,6 +15,10 @@ jobs:
         run: |
           make install
       - name: Make prediction
+        env:
+          AIRNOW_API_KEY: ${{ secrets.AIRNOW_API_KEY }}
+          LAT: 47.543737
+          LON: -122.367417
         run: |
           make prediction
       - name: Setup git config
