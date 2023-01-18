@@ -41,6 +41,9 @@ for forecast in daily_forecasts:
                 None,
             ],
         )
+    except duckdb.ConstraintException as exc:
+        # TODO: Make use of UPSERT once supported by DuckDb (https://github.com/duckdb/duckdb/pull/5866)
+        print(f"Prediction already made for {solar_production_prediction.date} on {date_of_prediction} using model {model.version}")
 
     except InsufficientHourlyForecastError as exc:
         print(f"Can't make prediction for {forecast.date} because: {exc}")
