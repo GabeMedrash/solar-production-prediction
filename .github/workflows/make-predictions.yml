@@ -1,0 +1,29 @@
+name: Make solar production predictions
+on:
+  schedule:
+    - cron: '15 5 * * *'  # Run every day at 5:15 AM
+
+jobs:
+  make-prediction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c  # v3.3.0
+      - name: Set up Python
+        uses: actions/setup-python@d27e3f3d7c64b4bbf8e4abfb9b63b83e846e0435  # v4.5.0, will make use of `.python-version`
+      - name: Install dependencies
+        run: |
+          make install
+      - name: Make prediction
+        run: |
+          make prediction
+      - name: Setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+      - name: Commit changes to predictions-db
+        run: |
+          # Stage the DB file, commit and push
+          git add src/solar_production_prediction/prediction/predictions.duckdb
+          git commit -m "[$(date --iso-8601='date')] Make predictions"
+          git push origin main
