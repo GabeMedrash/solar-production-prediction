@@ -7,10 +7,10 @@ To run:
 
 import duckdb
 
-from . import CREATE_PREDICTIONS_TABLE
 from .. import PREDICTIONS_DB_PATH
+from . import CREATE_PREDICTIONS_TABLE, SWAP_ACCURACY_FOR_ACTUAL_WATTAGE
 
-statements = (CREATE_PREDICTIONS_TABLE,)
+statements = (CREATE_PREDICTIONS_TABLE, SWAP_ACCURACY_FOR_ACTUAL_WATTAGE)
 
 db_con = duckdb.connect(PREDICTIONS_DB_PATH)
 for statement in statements:
