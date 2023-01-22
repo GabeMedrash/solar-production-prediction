@@ -1,11 +1,11 @@
 import json
 import typing
 
-from sklearn.linear_model._base import LinearModel
+from sklearn.base import BaseEstimator
 
 
 class Model:
-    _estimator: LinearModel
+    _estimator: BaseEstimator
     _fieldnames: list[str]
     _kwargs: dict[str, typing.Any]
     _random_state: int
@@ -14,7 +14,7 @@ class Model:
 
     def __init__(
         self,
-        estimator: LinearModel,
+        estimator: BaseEstimator,
         fieldnames: list[str],
         random_state: int,
         test_size: float,
@@ -34,7 +34,7 @@ class Model:
         return self._fieldnames
 
     @property
-    def estimator(self) -> LinearModel:
+    def estimator(self) -> BaseEstimator:
         return self._estimator
 
     @property

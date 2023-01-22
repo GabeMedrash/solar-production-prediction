@@ -49,20 +49,24 @@ clean:  # Clear proj dir of all .gitignored files
 ########### Code quality ##############
 #######################################
 type-check:
-> $(PYTHON) -m mypy --ignore-missing-imports src .github/actions/refresh_enphase_tokens
+> $(PYTHON) -m mypy --ignore-missing-imports src
 .PHONY: type-check
 
 fmt:
-> $(PYTHON) -m black src .github/actions/refresh_enphase_tokens
+> $(PYTHON) -m black src
 .PHONY: fmt
 
 import-sort:
-> $(PYTHON) -m isort src .github/actions/refresh_enphase_tokens
+> $(PYTHON) -m isort src
 .PHONY: import-sort
 
 #######################################
 ########### Run the thing #############
 #######################################
 prediction:
-> $(PYTHON) -m src.solar_production_prediction
+> $(PYTHON) -m src.bin.predict
 .PHONY: prediction
+
+enphase-tokens:
+> $(PYTHON) -m src.bin.refresh_enphase_tokens
+.PHONY: enphase-tokens

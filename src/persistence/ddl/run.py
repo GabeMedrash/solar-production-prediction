@@ -2,7 +2,7 @@
 Setup predictions-db. DDL statements must be idempotent.
 
 To run:
-`./venv/bin/python -m src.solar_production_prediction.prediction.ddl.run`
+`./venv/bin/python -m src.persistence.ddl.run`
 """
 
 import duckdb

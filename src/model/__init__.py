@@ -4,7 +4,7 @@ from .data import (
     OBSERVATION_NAME_AND_HOUR_SEPARATOR,
 )
 from .model_base import Model
-from .v2022_12_31 import model
+from .v2022_12_30 import model
 
 __all__ = (
     "OBSERVATION_NAME_AND_HOUR_SEPARATOR",

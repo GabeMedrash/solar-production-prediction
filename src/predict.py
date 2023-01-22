@@ -2,14 +2,14 @@ import dataclasses
 import datetime
 import typing
 
-from .model import (
-    OBSERVATION_NAME_AND_HOUR_SEPARATOR,
-    Model,
-)
-from .weather_api import (
+from .external_data import (
     DailyForecast,
     HourlyForecast,
     WeatherPrediction,
+)
+from .model import (
+    OBSERVATION_NAME_AND_HOUR_SEPARATOR,
+    Model,
 )
 
 

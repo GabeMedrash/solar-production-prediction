@@ -6,7 +6,7 @@ import pathlib
 import sys
 import time
 
-from ...weather_api import AirNowApi
+from ...external_data import AirNowApi
 
 WEB_SERVICE_HOURLY_REQUEST_LIMIT = 500
 THROTTLE_TIME = 3  # seconds

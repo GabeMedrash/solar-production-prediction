@@ -1,5 +1,0 @@
-name: 'Refresh Enphase Tokens'
-description: 'Refresh Enphase access and refresh tokens'
-runs:
-  using: 'docker'
-  image: 'Dockerfile'

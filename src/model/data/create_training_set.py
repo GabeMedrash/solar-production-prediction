@@ -8,7 +8,7 @@ Example output:
 `date | energy_production_Wh | pm25_daily_avg | temp_7 | humidity_7 | cloudcover_7 | ... | temp_14 | humidity_14 | cloudcover_14 | ...`
 
 To run:
-`/venv/bin/python src/solar_production_prediction/training/data/create_training_set.py`
+`/venv/bin/python src/model/data/create_training_set.py`
 """
 import csv
 import dataclasses

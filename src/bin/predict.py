@@ -1,19 +1,23 @@
+"""
+To run:
+`$ venv/bin/python -m src.bin.predict`
+"""
 import datetime
 
 import duckdb
 
-from .model import model
-from .predict import (
+from src.external_data import NoaaApi
+from src.model import model
+from src.persistence import PREDICTIONS_DB_PATH
+from src.predict import (
     InsufficientHourlyForecastError,
     predict,
 )
-from .prediction import PREDICTIONS_DB_PATH
-from .weather_api import NoaaApi
 
 if model is None:
     raise TypeError("model must be trained and exported from the `model` sub-package")
 
-date_of_prediction = datetime.datetime.now().date()
+date_of_prediction = datetime.date.today()
 
 # Get current weather forecast
 noaa_api = NoaaApi()

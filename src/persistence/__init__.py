@@ -4,7 +4,7 @@ To play around with the database:
 ```
 $ ./venv/bin/python
 >>> import duckdb
->>> con = duckdb.connect("./src/solar_production_prediction/prediction/predictions.duckdb")
+>>> con = duckdb.connect("./src/persistence/predictions.duckdb")
 >>> t = con.table("predictions")
 >>> t.count()
 >>> t.fetchall()

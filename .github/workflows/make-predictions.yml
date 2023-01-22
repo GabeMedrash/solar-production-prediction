@@ -15,8 +15,8 @@ jobs:
         run: |
           make install
       - name: Refresh Enphase tokens
-        uses: ./.github/actions/refresh_enphase_tokens
-        id: refresh_enphase_tokens
+        run: |
+          make enphase-tokens
       - name: Make prediction
         env:
           AIRNOW_API_KEY: ${{ secrets.AIRNOW_API_KEY }}
@@ -40,7 +40,7 @@ jobs:
           git commit -m "[$(date --iso-8601='date')] Update Enphase tokens"
 
           # Stage and commit the DB file
-          git add src/solar_production_prediction/prediction/predictions.duckdb
+          git add src/persistence/predictions.duckdb
           git commit -m "[$(date --iso-8601='date')] Make predictions"
 
           git push origin main

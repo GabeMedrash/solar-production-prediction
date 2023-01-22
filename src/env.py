@@ -108,3 +108,4 @@ class Env:
             if (parent / ROOT_DIR_SIGNAL_FILE).exists():
                 # Hit the root of the repo and the secrets file doesn't exist
                 return None
+        return None
