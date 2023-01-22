@@ -1,5 +1,6 @@
 FROM python:3.11
 
+WORKDIR /github/workspace
 COPY requirements.txt requirements.txt
 RUN python3 -m venv --upgrade-deps venv && venv/bin/python -m pip install -r requirements.txt
 
