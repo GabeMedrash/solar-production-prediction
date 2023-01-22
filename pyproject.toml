@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "solar_production_prediction"
 version = "0.1.0"
-dependencies = ["duckdb", "lxml", "python-dotenv", "matplotlib", "scikit-learn", "tenacity"]
+dependencies = ["duckdb", "lxml", "python-dotenv", "matplotlib", "PyNaCl", "scikit-learn", "tenacity"]
 
 [project.optional-dependencies]
 dev = ["black", "isort", "mypy"]

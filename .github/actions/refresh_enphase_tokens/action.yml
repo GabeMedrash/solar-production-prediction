@@ -2,26 +2,12 @@ name: 'Refresh Enphase Tokens'
 description: 'Refresh Enphase access and refresh tokens'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
-inputs:
-  github_repo_name:
-    description: 'Name of repo where tokens should be saved'
-    required: true
-    default: 'solar-production-prediction'
-  github_repo_owner:
-    description: 'Owner of repo where tokens should be saved'
-    required: true
-    default: 'GabeMedrash'
-  github_access_token:
-    description: 'Repo level access token used to save tokens as repo secrets'
-    required: true
-  enphase_refresh_token:
-    description: 'Enphase refresh token used to create a new access token'
-    required: true
-  enphase_client_id:
-    description: 'Enphase client id'
-    required: true
-  enphase_client_secret:
-    description: 'Enphase client secret'
-    required: true
+  image: '.github/actions/refresh_enphase_tokens/Dockerfile'
+# inputs:
+#   enphase_client_id:
+#     description: 'Enphase client id'
+#     required: true
+#   enphase_client_secret:
+#     description: 'Enphase client secret'
+#     required: true
 

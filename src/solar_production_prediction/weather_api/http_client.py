@@ -1,5 +1,7 @@
 import http
 import json
+import sys
+import traceback
 import typing
 import urllib.error
 import urllib.request
@@ -32,10 +34,15 @@ def default_retry_wait(_exc: BaseException | None) -> float:
     return 1.0
 
 
+DEFAULT_HEADERS = object()
+
+
 class HttpClient:
     def get_json(
         self,
         url: str,
+        method="GET",
+        headers: object | dict = DEFAULT_HEADERS,
         retry_wait: typing.Callable[[BaseException | None], float] = default_retry_wait,
     ) -> typing.Any:
         for attempt in tenacity.Retrying(
@@ -44,11 +51,27 @@ class HttpClient:
             wait=self._wait(retry_wait),
         ):
             with attempt:
-                request = urllib.request.Request(url, method="GET")
-                with urllib.request.urlopen(request) as response:
-                    response_body = response.read()
-                    response_parsed = json.loads(response_body.decode("utf-8"))
-                    return response_parsed
+                request = urllib.request.Request(url, method=method)
+                if headers != DEFAULT_HEADERS and isinstance(headers, dict):
+                    for key, value in headers.items():
+                        request.add_header(key, value)
+                try:
+                    with urllib.request.urlopen(request) as response:
+                        response_body = response.read()
+                        response_parsed = json.loads(response_body.decode("utf-8"))
+                        return response_parsed
+                except urllib.error.HTTPError as exc:
+                    try:
+                        error_response = exc.read()
+                        error_parsed = json.loads(error_response.decode("utf-8"))
+                        print(f"Failed ({exc.code} {exc.reason}): {error_parsed}")
+                    except Exception:
+                        formatted_traceback = "".join(
+                            traceback.format_exception(*sys.exc_info())
+                        )
+                        print(f"Failed: {formatted_traceback}")
+
+                    raise  # re-raise
 
     @tenacity.retry(retry=tenacity.retry_if_exception(is_expected_to_be_transient))
     def get_xml(self, url: str) -> etree.ElementBase:
