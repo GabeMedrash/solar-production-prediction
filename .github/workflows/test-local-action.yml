@@ -15,5 +15,5 @@ jobs:
         run: |
           make install
       - name: Hello world action step
-        uses: .github/actions/refresh_enphase_tokens
+        uses: ./.github/actions/refresh_enphase_tokens
         id: refresh_enphase_tokens
