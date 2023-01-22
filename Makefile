@@ -45,15 +45,15 @@ install: requirements.txt
 ########### Code quality ##############
 #######################################
 type-check:
-> $(PYTHON) -m mypy --ignore-missing-imports src
+> $(PYTHON) -m mypy --ignore-missing-imports src .github/actions/refresh_enphase_tokens
 .PHONY: type-check
 
 fmt:
-> $(PYTHON) -m black src
+> $(PYTHON) -m black src .github/actions/refresh_enphase_tokens
 .PHONY: fmt
 
 import-sort:
-> $(PYTHON) -m isort src
+> $(PYTHON) -m isort src .github/actions/refresh_enphase_tokens
 .PHONY: import-sort
 
 #######################################
