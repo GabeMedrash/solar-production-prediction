@@ -2,7 +2,7 @@ name: 'Refresh Enphase Tokens'
 description: 'Refresh Enphase access and refresh tokens'
 runs:
   using: 'docker'
-  image: '.github/actions/refresh_enphase_tokens/Dockerfile'
+  image: 'Dockerfile'
 # inputs:
 #   enphase_client_id:
 #     description: 'Enphase client id'
