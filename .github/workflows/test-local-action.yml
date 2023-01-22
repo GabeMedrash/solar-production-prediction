@@ -1,7 +1,5 @@
 name: Test out local action
-on:
-  schedule:
-    - cron: '15 23 * * *'  # Run every day at 11:15 PM
+on: push
 
 jobs:
   make-prediction:
