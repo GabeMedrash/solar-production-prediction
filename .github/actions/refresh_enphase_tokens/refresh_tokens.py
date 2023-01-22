@@ -1,13 +1,33 @@
-import argparse
+import pathlib
+import sys
 
-from src.solar_production_prediction.weather_api.enphase import Enphase
+
+def find_repo_root() -> pathlib.Path | None:
+    ROOT_DIR_SIGNAL_FILE = "pyproject.toml"
+    parents = pathlib.Path(__file__).parents
+    for parent in parents:
+        if (parent / ROOT_DIR_SIGNAL_FILE).exists():
+            # Hit the root of the repo
+            return parent
+    return None
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    args = parser.parse_args()
+    root = find_repo_root()
+    if root is None:
+        raise EnvironmentError(
+            "Expected script to run in a directory with a `pyproject.toml` file in its root"
+        )
+    sys.path.append(str(root))
 
-    enphase_client = Enphase()
-    # tokens = enphase_client.generate_new_tokens(args.enphase_refresh_token)
-    print(enphase_client.energy_produced_today())
+    from src.solar_production_prediction.env import (
+        Env,
+    )
+    from src.solar_production_prediction.weather_api.enphase import (
+        Enphase,
+    )
 
+    env = Env()
+    enphase_client = Enphase(env=env)
+    tokens = enphase_client.generate_new_tokens()
+    env.enphase_secret_tokens = tokens

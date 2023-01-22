@@ -3,11 +3,3 @@ description: 'Refresh Enphase access and refresh tokens'
 runs:
   using: 'docker'
   image: 'Dockerfile'
-# inputs:
-#   enphase_client_id:
-#     description: 'Enphase client id'
-#     required: true
-#   enphase_client_secret:
-#     description: 'Enphase client secret'
-#     required: true
-

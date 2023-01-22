@@ -41,6 +41,10 @@ install: requirements.txt
 > $(PYTHON) -m piptools sync requirements.txt
 .PHONY: install
 
+clean:  # Clear proj dir of all .gitignored files
+> git clean -Xfd -e "!.env"
+.PHONY: clean
+
 #######################################
 ########### Code quality ##############
 #######################################

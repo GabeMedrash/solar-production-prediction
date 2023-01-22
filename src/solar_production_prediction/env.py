@@ -21,7 +21,9 @@ class Env:
     ENV_VAR_ENPHASE_API_KEY = "ENPHASE_API_KEY"
     ENV_VAR_ENPHASE_CLIENT_ID = "ENPHASE_CLIENT_ID"
     ENV_VAR_ENPHASE_CLIENT_SECRET = "ENPHASE_CLIENT_SECRET"
-    ENV_VAR_ENPHASE_SECRETS_FILE_ENCRYPTION_KEY = "ENPHASE_SECRETS_FILE_ENCRYPTION_KEY_HEX"
+    ENV_VAR_ENPHASE_SECRETS_FILE_ENCRYPTION_KEY = (
+        "ENPHASE_SECRETS_FILE_ENCRYPTION_KEY_HEX"
+    )
     ENV_VAR_ENPHASE_SYSTEM_ID = "ENPHASE_SYSTEM_ID"
     ENV_VAR_LAT = "LAT"
     ENV_VAR_LON = "LON"
@@ -36,7 +38,9 @@ class Env:
     _env: dict[str, str]
     _enphase_secret_tokens: EnphaseTokens | None
 
-    def __init__(self, environ: dict[str, str] = os.environ.copy(), enphase_tokens = None) -> None:
+    def __init__(
+        self, environ: dict[str, str] = os.environ.copy(), enphase_tokens=None
+    ) -> None:
         self._env = environ
         self._enphase_secret_tokens = enphase_tokens
 
