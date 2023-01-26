@@ -21,9 +21,7 @@ class Env:
     ENV_VAR_ENPHASE_API_KEY = "ENPHASE_API_KEY"
     ENV_VAR_ENPHASE_CLIENT_ID = "ENPHASE_CLIENT_ID"
     ENV_VAR_ENPHASE_CLIENT_SECRET = "ENPHASE_CLIENT_SECRET"
-    ENV_VAR_ENPHASE_SECRETS_FILE_ENCRYPTION_KEY = (
-        "ENPHASE_SECRETS_FILE_ENCRYPTION_KEY_HEX"
-    )
+    ENV_VAR_ENPHASE_SECRETS_ENCRYPTION_KEY = "ENPHASE_SECRETS_ENCRYPTION_KEY_HEX"
     ENV_VAR_ENPHASE_SYSTEM_ID = "ENPHASE_SYSTEM_ID"
     ENV_VAR_LAT = "LAT"
     ENV_VAR_LON = "LON"
@@ -94,7 +92,7 @@ class Env:
         return (lat, lon)
 
     def _enphase_secrets_file_encryption_key(self) -> bytes:
-        hex_key = self._env[Env.ENV_VAR_ENPHASE_SECRETS_FILE_ENCRYPTION_KEY]
+        hex_key = self._env[Env.ENV_VAR_ENPHASE_SECRETS_ENCRYPTION_KEY]
         return bytes.fromhex(hex_key)
 
     def _find_enphase_secrets_file(self) -> pathlib.Path | None:
