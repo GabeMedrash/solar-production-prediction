@@ -15,6 +15,10 @@ jobs:
         run: |
           make install
       - name: Refresh Enphase tokens
+        env:
+          ENPHASE_CLIENT_ID: ${{ secrets.ENPHASE_CLIENT_ID }}
+          ENPHASE_CLIENT_SECRET: ${{ secrets.ENPHASE_CLIENT_SECRET }}
+          ENPHASE_SECRETS_ENCRYPTION_KEY_HEX: ${{ secrets.ENPHASE_SECRETS_ENCRYPTION_KEY_HEX }}
         run: |
           make enphase-tokens
       - name: Make prediction
