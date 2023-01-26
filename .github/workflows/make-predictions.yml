@@ -1,7 +1,7 @@
 name: Make solar production predictions
 on:
   schedule:
-    - cron: '15 5 * * *'  # Run every day at 5:15 AM
+    - cron: '15 13 * * *'  # Run every day at 5:15 AM Pacific Time, which is 13:15 PM UTC (at least half the year)
 
 jobs:
   make-prediction:
