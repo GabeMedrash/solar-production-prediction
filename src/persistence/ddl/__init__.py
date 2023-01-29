@@ -1,7 +1,7 @@
-TABLE_NAME = "predictions"
+PREDICTIONS_TBL = "predictions"
 
 CREATE_PREDICTIONS_TABLE = f"""\
-CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
+CREATE TABLE IF NOT EXISTS {PREDICTIONS_TBL} (
     prediction_for_date DATE NOT NULL,       -- Date for which prediction is made
     date_of_prediction  DATE NOT NULL,       -- Date prediction was made
     model_version       VARCHAR NOT NULL,    -- Version of model used to make prediction; date-like (e.g., "2022-12-31")
@@ -12,5 +12,5 @@ CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
 """
 
 SWAP_ACCURACY_FOR_ACTUAL_WATTAGE = f"""\
-ALTER TABLE {TABLE_NAME} RENAME COLUMN accuracy TO actual_energy_production;
+ALTER TABLE {PREDICTIONS_TBL} RENAME COLUMN accuracy TO actual_energy_production;
 """

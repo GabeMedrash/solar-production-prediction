@@ -13,6 +13,8 @@ $ ./venv/bin/python
 
 import pathlib
 
+from .ddl import PREDICTIONS_TBL
+
 PREDICTIONS_DB_PATH = str(pathlib.Path(__file__).parent / "predictions.duckdb")
 
-__all__ = ("PREDICTIONS_DB_PATH",)
+__all__ = ("PREDICTIONS_DB_PATH", "PREDICTIONS_TBL")

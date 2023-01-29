@@ -1,6 +1,9 @@
 import base64
 import datetime
+import http
+import random
 import typing
+import urllib.error
 import urllib.parse
 
 from ..env import EnphaseTokens, Env
@@ -49,7 +52,7 @@ class Enphase:
         url = f"{base_url}?{urllib.parse.urlencode(query_parameters, quote_via=urllib.parse.quote)}"
         headers = {"Authorization": f"Bearer {self._env.enphase_access_token()}"}
         response: EnphaseProductionSummary = self._http_client.get_json(
-            url, headers=headers
+            url, headers=headers, retry_wait=self._retry_waiter
         )
         assert len(response["production"]) == 1
         return response["production"][0]
@@ -76,3 +79,14 @@ class Enphase:
             "ENPHASE_REFRESH_TOKEN": response["refresh_token"],
         }
         return tokens
+
+    def _retry_waiter(self, exc: BaseException | None) -> float:
+        if (
+            isinstance(exc, urllib.error.HTTPError)
+            and http.HTTPStatus(int(exc.code)) == http.HTTPStatus.TOO_MANY_REQUESTS
+        ):
+            return 60.0  # 60 seconds
+
+        return random.randrange(
+            2, 5
+        )  # Any other transient error, just wait a few seconds
