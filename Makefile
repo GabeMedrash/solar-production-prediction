@@ -63,10 +63,14 @@ import-sort:
 #######################################
 ########### Run the thing #############
 #######################################
-prediction:
-> $(PYTHON) -m src.bin.predict
-.PHONY: prediction
-
 enphase-tokens:
 > $(PYTHON) -m src.bin.refresh_enphase_tokens
 .PHONY: enphase-tokens
+
+get_actual_energy_production:
+> $(PYTHON) -m src.bin.actual_energy_production
+.PHONY: get_actual_energy_production
+
+prediction:
+> $(PYTHON) -m src.bin.predict
+.PHONY: prediction

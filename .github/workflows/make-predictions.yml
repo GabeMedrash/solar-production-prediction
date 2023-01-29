@@ -21,18 +21,22 @@ jobs:
           ENPHASE_SECRETS_ENCRYPTION_KEY_HEX: ${{ secrets.ENPHASE_SECRETS_ENCRYPTION_KEY_HEX }}
         run: |
           make enphase-tokens
-      - name: Make prediction
+      - name: Make energy production predictions
         env:
           AIRNOW_API_KEY: ${{ secrets.AIRNOW_API_KEY }}
+          LAT: 47.543737
+          LON: -122.367417
+        run: |
+          make prediction
+      - name: Look up and persist actual energy production data
+        env:
           ENPHASE_API_KEY: ${{ secrets.ENPHASE_API_KEY }}
           ENPHASE_CLIENT_ID: ${{ secrets.ENPHASE_CLIENT_ID }}
           ENPHASE_CLIENT_SECRET: ${{ secrets.ENPHASE_CLIENT_SECRET }}
           ENPHASE_SECRETS_ENCRYPTION_KEY_HEX: ${{ secrets.ENPHASE_SECRETS_ENCRYPTION_KEY_HEX }}
           ENPHASE_SYSTEM_ID: ${{ secrets.ENPHASE_SYSTEM_ID }}
-          LAT: 47.543737
-          LON: -122.367417
         run: |
-          make prediction
+          make get_actual_energy_production
       - name: Setup git config
         run: |
           git config user.name "GitHub Actions Bot"
