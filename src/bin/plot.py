@@ -104,6 +104,8 @@ ax.scatter(X, Y, c="#000000", marker="*", label="Actual")
 
 fig.autofmt_xdate()
 ax.xaxis.set_major_locator(MultipleLocator(1))
+ax.set_xlabel("Date")
+ax.set_ylabel("Wh")
 manager = plt.get_current_fig_manager()
 window_width, window_height = manager.window.maxsize()
 fig.set(figwidth=window_width // 100, figheight=window_height // 100)
