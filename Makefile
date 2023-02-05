@@ -67,9 +67,13 @@ enphase-tokens:
 > $(PYTHON) -m src.bin.refresh_enphase_tokens
 .PHONY: enphase-tokens
 
-get_actual_energy_production:
+get-actual-energy-production:
 > $(PYTHON) -m src.bin.actual_energy_production
-.PHONY: get_actual_energy_production
+.PHONY: get-actual-energy-production
+
+output-plot:
+> $(PYTHON) -m src.bin.plot
+.PHONY: output-plot
 
 prediction:
 > $(PYTHON) -m src.bin.predict

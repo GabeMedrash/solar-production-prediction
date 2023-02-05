@@ -36,7 +36,10 @@ jobs:
           ENPHASE_SECRETS_ENCRYPTION_KEY_HEX: ${{ secrets.ENPHASE_SECRETS_ENCRYPTION_KEY_HEX }}
           ENPHASE_SYSTEM_ID: ${{ secrets.ENPHASE_SYSTEM_ID }}
         run: |
-          make get_actual_energy_production
+          make get-actual-energy-production
+      - name: Create new plot of model output and actual production
+        run: |
+          make output-plot
       - name: Setup git config
         run: |
           git config user.name "GitHub Actions Bot"
@@ -50,5 +53,9 @@ jobs:
           # Stage and commit the DB file
           git add src/persistence/predictions.duckdb
           git commit -m "[$(date --iso-8601='date')] Make predictions"
+
+          # Stage and commit the plot
+          git add results/plot.png
+          git commit -m "[$(date --iso-8601='date')] Plot results"
 
           git push origin main
