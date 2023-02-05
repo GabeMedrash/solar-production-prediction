@@ -29,7 +29,9 @@ query = db_con.execute(
         FROM
             {PREDICTIONS_TBL}
         WHERE
-            actual_energy_production IS NOT NULL;
+            actual_energy_production IS NOT NULL
+            AND
+            today() - prediction_for_date < 32;
     """),
 )
 rows: list[
@@ -106,9 +108,7 @@ fig.autofmt_xdate()
 ax.xaxis.set_major_locator(MultipleLocator(1))
 ax.set_xlabel("Date")
 ax.set_ylabel("Wh")
-manager = plt.get_current_fig_manager()
-window_width, window_height = manager.window.maxsize()
-fig.set(figwidth=window_width // 100, figheight=window_height // 100)
+fig.set(figwidth=20, figheight=10)  # inches
 plt.legend(loc="upper left")
 
 results_folder = pathlib.Path(__file__).parent.parent.parent / "results"
